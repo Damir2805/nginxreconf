@@ -1,0 +1,9 @@
+#!/bin/bash
+mkdir /usr/local/psa/admin/conf/templates/custom
+mkdir /usr/local/psa/admin/conf/templates/custom/domain
+cp /usr/local/psa/admin/conf/templates/default/domain/nginxDomainVirtualHost.php /usr/local/psa/admin/conf/templates/custom/domain
+
+find /usr/local/psa/admin/conf/templates/custom/domain -type f -name nginxDomainVirtualHost.php -exec replace "client_max_body_size" "####### client_max_body_size" -- {} \;
+find /usr/local/psa/admin/conf/templates/custom/domain -type f -name nginxDomainVirtualHost.php -exec replace "proxy_read_timeout" "####### proxy_read_timeout" -- {} \;
+
+/usr/local/psa/admin/sbin/httpdmng --reconfigure-all
